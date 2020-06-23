@@ -8,8 +8,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 
 class CategoryFixtures extends Fixture
 {
-    public function load(ObjectManager $manager)
-    {
+    public function load(ObjectManager $manager) {
         $this->loadMainCategories($manager);
         $this->loadElectronics($manager);
         $this->loadComputers($manager);
@@ -31,26 +30,32 @@ class CategoryFixtures extends Fixture
     }
 
     private function loadElectronics($manager) {
+
         $this->loadSubcategories($manager, 'Electronics', 1);
     }
 
     private function loadComputers($manager) {
+
         $this->loadSubcategories($manager, 'Computers', 6);
     }
 
     private function loadLaptops($manager) {
+
         $this->loadSubcategories($manager, 'Laptops', 8);
     }
 
     private function loadBooks($manager) {
+
         $this->loadSubcategories($manager, 'Books', 3);
     }
 
     private function loadMovies($manager) {
+
         $this->loadSubcategories($manager, 'Movies', 4);
     }
 
     private function loadRomance($manager) {
+
         $this->loadSubcategories($manager, 'Romance', 18);
     }
 
@@ -58,7 +63,8 @@ class CategoryFixtures extends Fixture
 
         $parent = $manager->getRepository(Category::class)->find($parent_id);
         $methodName = "get{$category}Data";
-        foreach ($this->$methodName() as [$name]) {
+
+        foreach ($this->$methodName() as [$name] ) {
             $category = new Category();
             $category->setName($name);
             $category->setParent($parent);
@@ -74,7 +80,7 @@ class CategoryFixtures extends Fixture
             ['Electronics', 1],
             ['Toys', 2],
             ['Books', 3],
-            ['Movies', 4]
+            ['Movies', 4],
         ];
     }
 
@@ -109,7 +115,7 @@ class CategoryFixtures extends Fixture
     private function getBooksData() {
 
         return [
-            ['Childres\'s Books', 15],
+            ['Children\'s Books', 15],
             ['Kindle eBooks', 16],
         ];
     }
