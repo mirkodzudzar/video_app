@@ -7,13 +7,13 @@ use App\Utils\AbstractClasses\CategoryTreeAbstract;
 
 class CategoryTreeFrontPage extends CategoryTreeAbstract {
 
-  // public $html_1 = '<ul>';
-  // public $html_2 = '<li>';
-  // public $html_3 = '<a href="';
-  // public $html_4 = '">';
-  // public $html_5 = '</a>';
-  // public $html_6 = '</li>';
-  // public $html_7 = '</ul>';
+  public $html_1 = '<ul>';
+  public $html_2 = '<li>';
+  public $html_3 = '<a href="';
+  public $html_4 = '">';
+  public $html_5 = '</a>';
+  public $html_6 = '</li>';
+  public $html_7 = '</ul>';
 
   public function getCategoryListAndParent(int $id): string {
 
@@ -36,23 +36,24 @@ class CategoryTreeFrontPage extends CategoryTreeAbstract {
   }
 
   public function getCategoryList(array $categories_array) {
-    $this->categoryList .= '<ul>';
 
+    $this->categoryList .= $this->html_1;
     foreach ($categories_array as $value) {
-      $catName = $this->slugger->slugify($value['name']);
+
+      $catName = $value['name'];
 
       $url = $this->urlGenerator->generate('video_list', ['categoryname' => $catName, 'id' => $value['id']]);
 
-      $this->categoryList .= '<li>' . '<a href="' . $url . '">' . $value['name'] . '</a>';
+      $this->categoryList .= $this->html_2 . $this->html_3 . $url . $this->html_4 . $catName . $this->html_5;
 
       if (!empty($value['children'])) {
         $this->getCategoryList($value['children']);
       }
 
-      $this->categoryList .= '</li>';
+      $this->categoryList .= $this->html_6;
     }
 
-    $this->categoryList .= '</ul>';
+    $this->categoryList .= $this->html_7;
 
     return $this->categoryList;
   }
@@ -73,26 +74,24 @@ class CategoryTreeFrontPage extends CategoryTreeAbstract {
     }
   }
 
-
   // public function getCategoryList(array $categories_array) {
+  //   $this->categoryList .= '<ul>';
 
-  //   $this->categoryList .= $this->html_1;
   //   foreach ($categories_array as $value) {
-
-  //     $catName = $value['name'];
+  //     $catName = $this->slugger->slugify($value['name']);
 
   //     $url = $this->urlGenerator->generate('video_list', ['categoryname' => $catName, 'id' => $value['id']]);
 
-  //     $this->categoryList .= $this->html_2 . $this->html_3 . $url . $this->html_4 . $catName . $this->html_5;
+  //     $this->categoryList .= '<li>' . '<a href="' . $url . '">' . $value['name'] . '</a>';
 
   //     if (!empty($value['children'])) {
   //       $this->getCategoryList($value['children']);
   //     }
 
-  //     $this->categoryList .= $this->html_6;
+  //     $this->categoryList .= '</li>';
   //   }
 
-  //   $this->categoryList .= $this->html_7;
+  //   $this->categoryList .= '</ul>';
 
   //   return $this->categoryList;
   // }
