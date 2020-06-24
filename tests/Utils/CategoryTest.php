@@ -46,6 +46,16 @@ class CategoryTest extends KernelTestCase
         $this->assertSame($string, $this->mockedCategoryTreeFrontPage->getCategoryList($array));
     }
 
+    /**
+     * @dataProvider dataForCategoryTreeAdminOptionList
+     */
+    public function testCategoryTreeAdminOptionList($arrayToCopmare, $arrayFromDb) {
+
+        $this->mockedCategoryTreeAdminOptionList->categoriesArrayFromDb = $arrayFromDb;
+        $arrayFromDb = $this->mockedCategoryTreeAdminOptionList->buildTree();
+        $this->assertSame($arrayToCopmare, $this->mockedCategoryTreeAdminOptionList->getCategoryList($arrayFromDb));
+    }
+
     public function dataForCategoryTreeFrontPage() {
 
         // Delete all categories except Electronics - Computers - Laptops - HP, in order to run this test.
@@ -91,6 +101,25 @@ class CategoryTest extends KernelTestCase
                 ["id" => "14", "parent_id" => 8, "name" => "HP"],
             ],
             14
+        ];
+    }
+
+    public function dataForCategoryTreeAdminOptionList() {
+
+        // Delete all categories except Electronics - Computers - Laptops - HP, in order to run this test.
+        yield [
+            [
+                ['name' => 'Electronics', 'id' => 1],
+                ['name' => '--Computers', 'id' => 6],
+                ['name' => '----Laptops', 'id' => 8],
+                ['name' => '------HP', 'id' => 14]
+            ],
+            [
+                ["name" => "Electronics", "id" => 1, "parent_id" => null],
+                ["name" => "Computers", "id" => 6, "parent_id" => 1],
+                ["name" => "Laptops", "id" => 8, "parent_id" => 6],
+                ["name" => "HP", "id" => 14, "parent_id" => 8]
+            ]
         ];
     }
 
