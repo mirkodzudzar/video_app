@@ -9,18 +9,28 @@ use App\Twig\AppExtension;
 class CategoryTest extends KernelTestCase
 {
     protected $mockedCategoryTreeFrontPage;
+    protected $mockedCategoryTreeAdminList;
+    protected $mockedCategoryTreeAdminOptionList;
 
     protected function setUp() {
 
         $kernel = self::bootKernel();
         $urlGenerator = $kernel->getContainer()->get('router');
-        $this->mockedCategoryTreeFrontPage = $this->getMockBuilder('\App\Utils\CategoryTreeFrontPage')
-            ->disableOriginalConstructor()
-            // if no, all methods return null unless mocked
-            ->setMethods()
-            ->getMock();
+        $tested_classes = [
+            'CategoryTreeAdminList',
+            'CategoryTreeAdminOptionList',
+            'CategoryTreeFrontPage',
+        ];
+        foreach ($tested_classes as $class) {
+            $name = 'mocked' . $class;
+            $this->$name = $this->getMockBuilder('\App\Utils\\' . $class)
+                ->disableOriginalConstructor()
+                // if no, all methods return null unless mocked
+                ->setMethods()
+                ->getMock();
+            $this->$name->urlGenerator = $urlGenerator;
+        }
 
-        $this->mockedCategoryTreeFrontPage->urlGenerator = $urlGenerator;
     }
 
     /**
@@ -38,6 +48,7 @@ class CategoryTest extends KernelTestCase
 
     public function dataForCategoryTreeFrontPage() {
 
+        // Delete all categories except Electronics - Computers - Laptops - HP, in order to run this test.
         yield [
             '<ul><li><a href="/video-list/category/computers,6">Computers</a><ul><li><a href="/video-list/category/laptops,8">Laptops</a><ul><li><a href="/video-list/category/hp,14">HP</a></li></ul></li></ul></li></ul>',
             [
