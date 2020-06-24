@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Category;
 use App\Utils\CategoryTreeAdminList;
+use App\Utils\CategoryTreeAdminOptionList;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -15,16 +16,16 @@ class AdminController extends AbstractController
     /**
      * @Route("/", name="admin_main_page")
      */
-    public function index()
-    {
+    public function index() {
+
         return $this->render('admin/my_profile.html.twig');
     }
 
     /**
      * @Route("/categories", name="categories")
      */
-    public function categories(CategoryTreeAdminList $categories)
-    {
+    public function categories(CategoryTreeAdminList $categories) {
+
         $categories->getCategoryList($categories->buildTree());
 
         return $this->render('admin/categories.html.twig', [
@@ -35,44 +36,53 @@ class AdminController extends AbstractController
     /**
      * @Route("/videos", name="videos")
      */
-    public function videos()
-    {
+    public function videos() {
+
         return $this->render('admin/videos.html.twig');
     }
 
     /**
      * @Route("/upload-video", name="upload_video")
      */
-    public function uploadVideo()
-    {
+    public function uploadVideo() {
+
         return $this->render('admin/upload_video.html.twig');
     }
 
     /**
      * @Route("/users", name="users")
      */
-    public function users()
-    {
+    public function users() {
+
         return $this->render('admin/users.html.twig');
     }
 
     /**
      * @Route("/edit-category/{id}", name="edit_category")
      */
-    public function editCategory($id)
-    {
+    public function editCategory($id) {
+
         return $this->render('admin/edit_category.html.twig');
     }
 
     /**
      * @Route("/delete-category/{id}", name="delete_category")
      */
-    public function deleteCategory(Category $category)
-    {
+    public function deleteCategory(Category $category) {
+
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($category);
         $entityManager->flush();
 
         return $this->redirectToRoute('categories');
+    }
+
+    public function getAllCategories(CategoryTreeAdminOptionList $categories) {
+
+        $categories->getCategoryList($categories->buildTree());
+
+        return $this->render('admin/_all_categories.html.twig', [
+            'categoreis' => $categories,
+        ]);
     }
 }

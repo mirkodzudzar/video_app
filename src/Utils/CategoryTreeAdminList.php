@@ -27,16 +27,16 @@ class CategoryTreeAdminList extends CategoryTreeAbstract {
       $this->categoryList .= $this->html_2 . $value['name'] . $this->html_3 . $url_edit . $this->html_4 . ' Edit' . $this->html_5 . $url_delete . $this->html_6 . 'Delete' . $this->html_7;
 
       if (!empty($value['children'])) {
-          $this->getCategoryList($value['children']);
-        }
-
-        $this->categoryList .= $this->html_8;
+        $this->getCategoryList($value['children']);
       }
 
-      $this->categoryList .= $this->html_9;
-
-      return $this->categoryList;
+      $this->categoryList .= $this->html_8;
     }
+
+    $this->categoryList .= $this->html_9;
+
+    return $this->categoryList;
+  }
 
   // public function getCategoryList(array $categories_array) {
   //   $this->categoryList .= '<ul>';
