@@ -21,9 +21,11 @@ class VideoRepository extends ServiceEntityRepository
         $this->paginator = $paginator;
     }
 
-    public function findAllPaginated($page) {
+    public function findByChildIds(array $value, int $page) {
 
         $dbquery = $this->createQueryBuilder('v')
+            ->andWhere('v.category IN (:val)')
+            ->setParameter('val', $value)
             ->getQuery();
 
         // 5 is the default value of number of paginated items on website
@@ -31,6 +33,17 @@ class VideoRepository extends ServiceEntityRepository
 
         return $pagination;
     }
+
+    // public function findAllPaginated($page) {
+
+    //     $dbquery = $this->createQueryBuilder('v')
+    //         ->getQuery();
+
+    //     // 5 is the default value of number of paginated items on website
+    //     $pagination = $this->paginator->paginate($dbquery, $page, 5);
+
+    //     return $pagination;
+    // }
 
     // /**
     //  * @return Video[] Returns an array of Video objects
