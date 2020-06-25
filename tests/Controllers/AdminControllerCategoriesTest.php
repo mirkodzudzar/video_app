@@ -11,6 +11,21 @@ class AdminControllerCategoriesTest extends WebTestCase
 
         parent::setUp();
         $this->client = static::createClient();
+        // Prevents from shutting down the kernel between test request and thus losing transactions.
+        $this->client->disableReboot();
+
+        $this->entityManager = $this->client->getContainer()->get('doctrine.orm.entity_manager');
+        $this->entityManager->beginTransaction();
+        $this->entityManager->getConnection()->setAutoCommit(false);
+    }
+
+    public function tearDown() {
+
+        parent::tearDown();
+        // This is used for rolling back DB data for not making any changes.
+        $this->entityManager->rollback();
+        $this->entityManager->close();
+        $this->entityManager = null; //prevent memory leaks
     }
 
     public function testTextOnPage() {
@@ -18,5 +33,44 @@ class AdminControllerCategoriesTest extends WebTestCase
         $crawler = $this->client->request('GET', '/admin/categories');
         $this->assertSame('Categories list', $crawler->filter('h2')->text());
         $this->assertContains('Electronics', $this->client->getResponse()->getContent());
+    }
+
+    public function testNumberOfItems() {
+
+        $crawler = $this->client->request('GET', '/admin/categories');
+        $this->assertCount(21, $crawler->filter('option'));
+    }
+
+    public function testNewCategory() {
+
+        $crawler = $this->client->request('GET', '/admin/categories');
+
+        $form = $crawler->selectButton('Add')->form([
+            'category[name]' => 'Other electronics',
+            'category[parent]' => 1,
+        ]);
+        $this->client->submit($form);
+
+        $category = $this->entityManager->getRepository(Category::class)->findOneBy(['name' => 'Other electronics']);
+
+        $this->assertNotNull($category);
+        $this->assertSame('Other electronics', $category->getName());
+    }
+
+    public function testEditCategory() {
+
+        $crawler = $this->client->request('GET', '/admin/edit-category/1');
+
+        $form = $crawler->selectButton('Save')->form([
+            'category[name]' => 'Electronics 2',
+            'category[parent]' => 1,
+        ]);
+        $this->client->submit($form);
+
+        $category = $this->entityManager->getRepository(Category::class)->findOneBy(['name' => 'Electronics 2']);
+
+        $this->assertNotNull($category);
+        $this->assertSame('Electronics 2', $category->getName());
+
     }
 }
