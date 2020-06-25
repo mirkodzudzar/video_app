@@ -23,10 +23,10 @@ class CategoryTest extends KernelTestCase
         ];
         foreach ($tested_classes as $class) {
             $name = 'mocked' . $class;
+            // Creating mock(fake) version of our class
             $this->$name = $this->getMockBuilder('\App\Utils\\' . $class)
                 ->disableOriginalConstructor()
-                // if no, all methods return null unless mocked
-                ->setMethods()
+                ->setMethods() // if no, all methods return null unless mocked
                 ->getMock();
             $this->$name->urlGenerator = $urlGenerator;
         }

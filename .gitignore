@@ -23,3 +23,5 @@
 .docker
 docker-compose.yml
 ###< docker ###
+
+phpunit.xml.dist
