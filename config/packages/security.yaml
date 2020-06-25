@@ -24,17 +24,17 @@ security:
             # https://symfony.com/doc/current/security/impersonating_user.html
             # switch_user: true
 
-            form_login: true
-            # The route nane that the login form submits to
-            check_path: login
-            # When the user tries to access a protected page, they are redirected here
-            login_path: login
-            # Secure the login form against CSRF
-            csrf_token_generator: security.csrf.token_manager
-            # The page users are redirecter to when ehere is no previous page stored in the session
-            # eg. when the users access directly to the login page
-            default_target_path: admin_main_page
-            username_parameter: _email
+            form_login:
+                # The route nane that the login form submits to
+                check_path: login
+                # When the user tries to access a protected page, they are redirected here
+                login_path: login
+                # Secure the login form against CSRF
+                csrf_token_generator: security.csrf.token_manager
+                # The page users are redirecter to when ehere is no previous page stored in the session
+                # eg. when the users access directly to the login page
+                default_target_path: admin_main_page
+                username_parameter: _email
 
             logout:
                 # The route name the user can go to in order to logout
