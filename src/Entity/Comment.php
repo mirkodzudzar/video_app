@@ -69,7 +69,7 @@ class Comment
     public function setCreatedAt(): self
     {
         if (isset($this->created_at2)) {
-            $this->created_at = $created_at2;
+            $this->created_at = $this->created_at2;
         } else {
             $this->created_at = new \DateTime();
         }
