@@ -9,6 +9,7 @@ class AdminControllerCategoriesTest extends WebTestCase
 {
     public function setUp() {
 
+        // Super admin user
         parent::setUp();
         $this->client = static::createClient([], [
             'PHP_AUTH_USER' => 'mirko@gmail.com',
