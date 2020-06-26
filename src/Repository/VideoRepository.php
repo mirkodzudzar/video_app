@@ -69,6 +69,7 @@ class VideoRepository extends ServiceEntityRepository
             ->addSelect('c', 'u')
             ->where('v.id = :id')
             ->setParameter(':id', $id)
+            ->orderBy('c.created_at', 'DESC')
             ->getQuery()
             ->getOneOrNullResult();
     }
