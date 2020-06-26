@@ -13,7 +13,7 @@ trait Rollback {
         'PHP_AUTH_PW' => 'mirko'
     ]);
     // Prevents from shutting down the kernel between test request and thus losing transactions.
-    $this->client->disableReboot();
+    // $this->client->disableReboot();
 
     $this->entityManager = $this->client->getContainer()->get('doctrine.orm.entity_manager');
     // $this->entityManager->beginTransaction();
