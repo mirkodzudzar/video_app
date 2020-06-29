@@ -36,7 +36,8 @@ class UserFixtures extends Fixture
         return [
             ['Mirko', 'Mirkovic', 'mirko@gmail.com', 'mirko', '123qwe', ['ROLE_ADMIN']],
             ['Marko', 'Markovic', 'marko@gmail.com', 'marko', '567rty', ['ROLE_USER']],
-            ['Pero', 'Peric', 'pero@gmail.com', 'pero', 'null', ['ROLE_USER']],
+            ['Pera', 'Peric', 'pera@gmail.com', 'pera', 'null', ['ROLE_USER']],
+            ['Zoki', 'Zokic', 'zoki@gmail.com', 'zoki', null, ['ROLE_USER']],
         ];
     }
 
