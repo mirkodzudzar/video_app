@@ -1,5 +1,12 @@
 {% extends "base.html.twig" %}
 
+{% block customstylesheets %}
+    {{parent()}}
+    {% if app.user %}
+        <link rel="stylesheet" href="{{asset('assets/css/likes.css')}}">
+    {% endif %}
+{% endblock %}
+
 {% block main %}
 
 {# {% set sample_videos = [289729765,238902809,150870038,219727723,289879647,261379936,289029793,60594348,290253648] %} #}
@@ -66,4 +73,11 @@
 
 </main>
 
+{% endblock %}
+
+{% block customjavascripts %}
+    {{parent()}}
+    {% if app.user %}
+        <script src="{{asset('assets/js/likes.js')}}"></script>
+    {% endif %}
 {% endblock %}
