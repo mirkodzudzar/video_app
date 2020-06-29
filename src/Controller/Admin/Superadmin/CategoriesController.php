@@ -5,9 +5,13 @@ namespace App\Controller\Admin\Superadmin;
 use App\Entity\Category;
 use App\Form\CategoryType;
 use App\Utils\CategoryTreeAdminList;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+/**
+ * @Route("/admin/su")
+ */
 class CategoriesController extends AbstractController {
 
   /**

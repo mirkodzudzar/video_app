@@ -147,7 +147,7 @@ class FrontController extends AbstractController
 
         $categories = $this->getDoctrine()->getRepository(Category::class)->findBy(['parent' => null], ['name' => 'ASC']);
 
-        return $this->render('front/_main_categories.html.twig', [
+        return $this->render('front/includes/_main_categories.html.twig', [
             'categories' => $categories,
         ]);
     }
