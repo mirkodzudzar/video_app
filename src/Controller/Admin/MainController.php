@@ -4,9 +4,12 @@ namespace App\Controller\Admin;
 
 use App\Entity\User;
 use App\Entity\Video;
+use App\Form\UserType;
 use App\Utils\CategoryTreeAdminOptionList;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @Route("/admin")
@@ -16,10 +19,38 @@ class MainController extends AbstractController
     /**
      * @Route("/", name="admin_main_page")
      */
-    public function index() {
+    public function index(Request $request, UserPasswordEncoderInterface $password_encoder) {
+
+        $user = $this->getUser();
+        $form = $this->createForm(UserType::class, $user, ['user' => $user]);
+        $form->handleRequest($request);
+        $is_invalid = null;
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $user->setName($request->request->get('user')['name']);
+            $user->setLastName($request->request->get('user')['last_name']);
+            $user->setEmail($request->request->get('user')['email']);
+            $password = $password_encoder->encodePassword($user, $request->request->get('user')['password']['first']);
+            $user->setPassword($password);
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            $this->addFlash(
+                    'success',
+                    'Your changes were saved!'
+                );
+
+            return $this->redirectToRoute('admin_main_page');
+        } elseif ($request->isMethod('post')) {
+            $is_invalid = 'is-invalid';
+        }
 
         return $this->render('admin/my_profile.html.twig', [
             'subscription' => $this->getUser()->getSubscription(),
+            'form' => $form->createView(),
+            'is_invalid' => $is_invalid,
         ]);
     }
 
