@@ -70,4 +70,20 @@ class MainController extends AbstractController
         return $this->redirectToRoute('admin_main_page');
     }
 
+    /**
+     * @Route("/delete-account", name="delete_account")
+     */
+    public function deleteAccount() {
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+
+        $entityManager->remove($user);
+        $entityManager->flush();
+
+        session_destroy();
+
+        return $this->redirectToRoute('main_page');
+    }
+
 }
