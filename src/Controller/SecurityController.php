@@ -15,7 +15,7 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 class SecurityController extends AbstractController {
 
   /**
-   * @Route("/register", name="register")
+   * @Route("/register/{plan}", name="register")
    */
   public function register(Request $request, UserPasswordEncoderInterface $password_encoder, SessionInterface $session, $plan) {
 
