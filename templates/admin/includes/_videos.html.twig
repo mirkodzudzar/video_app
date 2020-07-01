@@ -30,7 +30,7 @@
                     </select>
                 </form>
             </td>
-            <td><a href="#" onclick="delete_video(event,2);"><i class="fas fa-trash"></i></a></td>
+            <td><a href="{{path('delete_video', {'video': video.id, 'path': video.vimeoId})}}" onclick="delete_video(event);"><i class="fas fa-trash"></i></a></td>
           {% endif %}
         </tr>
         {% endfor %}
