@@ -5,6 +5,7 @@ namespace App\Controller\Admin\Superadmin;
 use App\Entity\User;
 use App\Entity\Video;
 use App\Form\VideoType;
+use App\Entity\Category;
 use App\Utils\Interfaces\UploaderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -78,6 +79,24 @@ class SuperAdminController extends AbstractController
 
         return $this->redirectToRoute('videos');
     }
+
+    /**
+     * @Route("/update-video-category/{video}", methods={"POST"}, name="update_video_category")
+    */
+    public function updateVideoCategory(Request $request, Video $video)
+     {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $category = $this->getDoctrine()->getRepository(Category::class)->find($request->request->get('video_category'));
+
+        $video->setCategory($category);
+
+        $em->persist($video);
+        $em->flush();
+
+        return $this->redirectToRoute('videos');
+     }
 
     /**
      * @Route("/users", name="users")

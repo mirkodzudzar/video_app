@@ -5,8 +5,9 @@ namespace App\Controller\Admin\Superadmin;
 use App\Entity\Category;
 use App\Form\CategoryType;
 use App\Utils\CategoryTreeAdminList;
-use Symfony\Component\Routing\Annotation\Route;
+use App\Utils\CategoryTreeAdminOptionList;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
@@ -58,6 +59,18 @@ class CategoriesController extends AbstractController {
     }
 
     return false;
+  }
+
+  public function getAllCategories(CategoryTreeAdminOptionList $categories, $editedCategory = null) {
+
+    $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+    $categories->getCategoryList($categories->buildTree());
+
+    return $this->render('admin/includes/_all_categories.html.twig', [
+        'categoreis' => $categories,
+        'editedCategory' => $editedCategory,
+    ]);
   }
 
   /**

@@ -7,7 +7,7 @@
   <h2>My liked videos</h2>
 {% endif %}
 
-{{include('admin/includes/_videos.html.twig', {'videos': videos})}}
+{{include('admin/includes/_videos.html.twig', {'videos': videos, 'categories': categories})}}
 
 {% endblock %}
 
