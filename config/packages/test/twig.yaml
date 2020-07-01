@@ -1,2 +1,4 @@
 twig:
+    globals:
+        upload_route_name: "upload_video_locally"
     strict_variables: true

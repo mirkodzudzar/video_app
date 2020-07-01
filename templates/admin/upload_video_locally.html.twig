@@ -1,0 +1,17 @@
+{% extends "admin/base.html.twig" %}
+
+{% block mainadmin %}
+    <h2>Upload a video</h2>
+    {{form_errors(form.uploaded_video)}}
+
+    {{form_start(form)}}
+        <div class="form-group">
+            <div class="custom-file">
+                {{ form_widget(form.uploaded_video) }}
+                {# {{ form_label(form.uploaded_video) }} #}
+                <label class="custom-file-label" for="video_uploaded_video">Choose file</label>
+            </div>
+        </div>
+        {{form_widget(form.save)}}
+    {{form_end(form)}}
+{% endblock %}

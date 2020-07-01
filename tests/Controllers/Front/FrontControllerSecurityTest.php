@@ -8,9 +8,6 @@ class FrontControllerSecurityTest extends WebTestCase
 {
     /**
      * @dataProvider getSecureUrls
-     *
-     * @param string $url
-     * @return void
      */
     public function testSecureUrls(string $url)
     {
@@ -26,7 +23,7 @@ class FrontControllerSecurityTest extends WebTestCase
         yield ['/admin/su/categories'];
         yield ['/admin/su/edit-category/1'];
         yield ['/admin/su/delete-category/1'];
-        yield ['/admin/su/upload-video'];
+        yield ['/admin/su/upload-video-locally'];
         yield ['/admin/su/users'];
     }
 
