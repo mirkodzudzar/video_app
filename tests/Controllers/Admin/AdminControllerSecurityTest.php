@@ -9,10 +9,6 @@ class AdminControllerSecurityTest extends WebTestCase
 {
     /**
      * @dataProvider  getUrlsForRegularUsers
-     *
-     * @param string $httpMethod
-     * @param string $url
-     * @return void
      */
     public function testAccessDeniedForRegularUsers(string $httpMethod, string $url) {
 
