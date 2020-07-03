@@ -57,6 +57,27 @@ class SuperAdminController extends AbstractController
     }
 
     /**
+     * @Route("/upload-video-by-vimeo", name="upload_video_by_vimeo")
+    */
+    public function uploadVideoByVimeo(Request $request) {
+
+        $vimeo_id = preg_replace('/^\/.+\//','',$request->get('video_uri'));
+        if($request->get('videoName') && $vimeo_id)
+        {
+            $entityManager = $this->getDoctrine()->getManager();
+            $video = new Video();
+            $video->setTitle($request->get('videoName'));
+            $video->setPath(Video::VimeoPath.$vimeo_id);
+
+            $entityManager->persist($video);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('videos');
+        }
+        return $this->render('admin/upload_video_vimeo.html.twig');
+    }
+
+    /**
      * @Route("/delete-video/{video}/{path}", name="delete_video", requirements={"path"=".+"})
      */
     public function deleteVideo(Video $video, $path, UploaderInterface $fileUploader) {
