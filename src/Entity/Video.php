@@ -103,7 +103,7 @@ class Video
     public function getVimeoId(): ?string {
 
         if (strpos($this->path, self::uploadFolder) !== false) {
-            return $this->path();
+            return $this->path;
         }
 
         $array = explode('/', $this->path);

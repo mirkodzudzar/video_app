@@ -78,6 +78,9 @@ class SuperAdminController extends AbstractController
         return $this->render('admin/upload_video_vimeo.html.twig');
     }
 
+    /**
+     * @Route("/set-video-duration/{video}/{vimeo_id}", name="set_video_duration", requirements={"vimeo_id"=".+"})
+     */
     public function setVideoDuration(Video $video, $vimeo_id) {
 
         if (!is_numeric($vimeo_id)) {
@@ -111,21 +114,21 @@ class SuperAdminController extends AbstractController
         if ($err) {
             throw new ServiceUnavailableHttpException('Error. Try again later. Message: '.$err);
         } else {
-        $duration = json_decode($response, true)['duration'] / 60;
+            $duration = json_decode($response, true)['duration'] / 60;
 
-        if ($duration) {
-            $video->setDuration($duration);
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($video);
-            $entityManager->flush();
-        } else {
-            $this->addFlash(
-                'danger',
-                'We were not able to update duration. Check the video.'
-            );
-        }
+            if ($duration) {
+                $video->setDuration($duration);
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($video);
+                $entityManager->flush();
+            } else {
+                $this->addFlash(
+                    'danger',
+                    'We were not able to update duration. Check the video.'
+                );
+            }
 
-        return $this->redirectToRoute('videos');
+            return $this->redirectToRoute('videos');
         }
     }
 
