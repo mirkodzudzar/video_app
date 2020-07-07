@@ -34,7 +34,7 @@ class UserFixtures extends Fixture
     private function getUserData(): array {
 
         return [
-            ['Mirko', 'Mirkovic', 'mirko@gmail.com', 'mirko', 'c5c037a21d969032ab98298ce23bc7c9', ['ROLE_ADMIN']],
+            ['Mirko', 'Mirkovic', 'mirko@gmail.com', 'mirko', '04b965bea81230cd1ba984f1bff6fb81', ['ROLE_ADMIN']],
             ['Marko', 'Markovic', 'marko@gmail.com', 'marko', '567rty', ['ROLE_USER']],
             ['Pera', 'Peric', 'pera@gmail.com', 'pera', 'null', ['ROLE_USER']],
             ['Zoki', 'Zokic', 'zoki@gmail.com', 'zoki', null, ['ROLE_USER']],

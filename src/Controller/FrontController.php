@@ -9,6 +9,7 @@ use App\Utils\RedisCache;
 use App\Controller\Traits\Likes;
 use App\Repository\VideoRepository;
 use App\Utils\CategoryTreeFrontPage;
+use App\Utils\Interfaces\CacheInterface;
 use App\Utils\VideoForNoValidSubscription;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -29,11 +30,12 @@ class FrontController extends AbstractController
     /**
      * @Route("/video-list/category/{categoryname},{id}/{page}", defaults={"page": "1"}, name="video_list")
      */
-    public function videoList($id, $page, CategoryTreeFrontPage $categories, Request $request, VideoForNoValidSubscription $video_no_members, RedisCache $cache ) {
+    public function videoList($id, $page, CategoryTreeFrontPage $categories, Request $request, VideoForNoValidSubscription $video_no_members, CacheInterface $cache ) {
 
         $cache = $cache->cache;
         $video_list = $cache->getItem('video_list'.$id.$page.$request->get('sortBy'));
-        $video_list->tag(['video_list']);
+        // $video_list->tag(['video_list']);
+        // seconds
         $video_list->expiresAfter(60);
         if (!$video_list->isHit()) {
             $ids = $categories->getChildIds($id);

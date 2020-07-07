@@ -56,4 +56,4 @@ services:
         arguments:
             - '@Redis'
 
-    App\Utils\Interfaces\CacheInterface: '@App\Utils\RedisCache'
+    App\Utils\Interfaces\CacheInterface: '@App\Utils\FilesCache'
